@@ -1,4 +1,9 @@
 import React, { Component } from "react";
+import { search } from '../actions/index'
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { Icon, Button, Input, AutoComplete } from 'antd';
+import { SelectProps } from 'antd/es/select';
 
 export class Search extends Component {
   state = {
@@ -7,43 +12,66 @@ export class Search extends Component {
   onSubmit = e => {
     e.preventDefault();
     if (this.state.text === "") {
-      this.props.setAlert("please enter text", "light");
+      alert("please enter text", "light");
     } else {
-      this.props.searchUsers(this.state.text);
-      this.setState({ text: "" });
+      this.props.search(this.state.text);
+
     }
   };
-
-  onChange = e => {
-    this.setState({ [e.target.name]: e.target.value });
+  handleSearch = () => {
+    this.props.search(this.state.text)
+  }
+  onSelect = e => {
+    this.setState({ text: e.target.value });
   };
 
+
   render() {
-    const { showClear, clearUsers } = this.props;
+    console.log(this.state.text)
+
+    const dataSource = this.props.deptlist.map((dep) => dep.department_name)
     return (
       <div>
-        <form onSubmit={this.onSubmit} className="form">
-          <input
-            type="text"
-            name="text"
-            placeholder="Search Users..."
-            value={this.state.text}
-            onChange={this.onChange}
+        <AutoComplete
+
+          className="global-search"
+          size="large"
+          style={{ width: '100%' }}
+          allowClear="true"
+          dataSource={dataSource}
+          onSelect={(value) => this.setState({ text: value })}
+          onSearch={() => { this.props.search(this.state.text) }}
+          placeholder="input here"
+        >
+          <Input
+            suffix={
+              <Button
+                className="search-btn"
+                style={{ marginRight: -12 }}
+                size="large"
+                type="primary"
+                onClick={this.onSubmit}
+              >
+                <Icon type="search" />
+              </Button>
+            }
           />
-          <input
-            type="submit"
-            value="Search"
-            className="btn btn-dark btn-block"
-          />
-        </form>
-        {showClear && (
-          <button variant="contained" color="secondary" onClick={clearUsers}>
-            clear
-          </button>
-        )}
+        </AutoComplete>
+
       </div>
     );
   }
 }
 
-export default Search;
+function mapStateToProps(state) {
+  return {
+    deptlist: state.deptReducer.deptsList,
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ search }, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Search);
+

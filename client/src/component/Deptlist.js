@@ -5,14 +5,14 @@ import Dept from './Dept';
 
 class Deptlist extends Component {
 	componentDidMount() {
-		const { fetchMovie } = this.props;
-		fetchAllDepartments();
+		this.props.fetchAllDepartments()
+
 	}
 
 	render() {
-		console.log(this.props.deptlist.map);
+
 		return (
-			<div>
+			<div style={userStyle}>
 				{this.props.deptlist.map((dept) => (
 					<Dept key={dept.id} dept={dept} />
 				))}
@@ -20,9 +20,15 @@ class Deptlist extends Component {
 		);
 	}
 }
-
+const userStyle = {
+	display: "grid",
+	gridTemplateColumns: "repeat(3, 1fr)",
+	gridGap: "0.5rem",
+	color: "white"
+};
 function mapStateToProps(state) {
 	return {
+		// deptlist: state.searchReducer.searchResult,
 		deptlist: state.deptReducer.deptsList,
 	};
 }

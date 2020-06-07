@@ -1,24 +1,25 @@
 import {
-    FETCH_UAS_ID,
-    FETCH_UAS_REQ,
-    POST_UAS_REQ,
-    ADD_UAS_REQ,
-    DELETE_UAS_REQ,
-    EDIT_UAS_REQ,
+    SEARCH_REQ,
+    SEARCH_REQ2
 } from '../actions/index';
 
 export const initialstate = {
-    uassList: [],
+    searchResult: [],
+    searchResult2: [],
 };
 
 export default function (state = initialstate, action) {
     switch (action.type) {
-        case FETCH_UAS_REQ:
+        case SEARCH_REQ:
             return {
                 ...state,
-                uassList: action.payload,
+                searchResult: action.payload,
             };
-
+        case SEARCH_REQ2:
+            return {
+                ...state,
+                searchResult2: action.payload,
+            };
         case null:
             return state;
 
@@ -26,5 +27,3 @@ export default function (state = initialstate, action) {
             return state;
     }
 }
-
-

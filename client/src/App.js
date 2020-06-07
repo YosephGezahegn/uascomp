@@ -1,40 +1,44 @@
 import Search from './component/Search';
+import Search2 from './component/Search2';
 import './App.css';
 import axios from 'axios';
 import React, { Component } from 'react';
 import Deptlist from './component/Deptlist';
+import Deptlist2 from './component/Deptlist2';
 import TopNav from './component/TopNav';
 import AddDept from './component/AddDept';
+import DeleteDept from './component/DeleteDept'
 
 class App extends Component {
-	state = {
-		loading: true,
-		deptlist: [],
-		alert: null,
-	};
 
-	searchUsers = async (text) => {
-		const res = await axios.get(`/api/department/search/${text}`);
-		this.setState({ deptlist: res.data, loading: false });
-	};
 
-	clearUsers = () => {
-		this.setState({ deptlist: [], deptlist2: [], loading: false });
-	};
+  render() {
+    return (
+      <div>
+        <TopNav />
+        <div className="container">
+          <div className="row">
+            <div className="col-sm-6">
+              <Search />
+            </div>
 
-	setAlert = (msg, type) => {
-		this.setState({ alert: { msg, type } });
-	};
+            <div className="col-sm-6">
+              <Search2 />
+            </div>
 
-	render() {
-		return (
-			<div>
-				<TopNav />
-				<Deptlist />
-				<AddDept />
-			</div>
-		);
-	}
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-sm-12">
+            <Deptlist />
+
+          </div>
+
+        </div>
+
+      </div>
+    );
+  }
 }
 
 export default App;

@@ -1,12 +1,12 @@
-import React, { Component } from "react";
-import Axios from "axios";
+/*import React, { Component } from "react";
+import axios from "axios";
 
 class DeleteDept extends Component {
   deleteMember(member) {
     var data = {
       id: member.id
     };
-    axios.delete("/api/department/", id).then(function(response) {
+    axios.delete("/api/department/", id).then(function (response) {
       if (response.status >= 400) {
         throw new Error("Bad response from server");
       }
@@ -24,3 +24,5 @@ class DeleteDept extends Component {
 }
 
 export default DeleteDept;
+
+*/

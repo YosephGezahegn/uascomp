@@ -8,7 +8,10 @@ export const ADD_COURSE_REQ = 'ADD_COURSE_REQ';
 export const DELETE_COURSE_REQ = 'DELETE_COURSE_REQ';
 export const EDIT_COURSE_REQ = 'EDIT_COURSE_REQ';
 
+
 export const FETCH_DEPARTMENT_REQ = 'FETCH_DEPARTMENT_REQ';
+export const FETCH_DEPARTMENT_SUCESS = 'FETCH_DEPARTMENT_SUCESS';
+
 export const FETCH_DEPARTMENT_ID = 'FETCH_DEPARTMENT_REQ';
 export const ADD_DEPARTMENT_REQ = 'ADD_DEPARTMENT_REQ';
 export const POST_DEPARTMENT_REQ = 'POST_DEPARTMENT_REQ';
@@ -23,88 +26,78 @@ export const EDIT_UAS_REQ = 'EDIT_UAS_REQ';
 export const DELETE_UAS_REQ = 'DELETE_UAS_REQ';
 
 export const SEARCH_REQ = 'SEARCH_REQ';
+export const SEARCH_REQ2 = 'SEARCH_REQ2';
 
-export function fetchAllDepartments() {
-	const request = axios.get(`/api/department/`).then((data) => {
-		return {
-			type: FETCH_DEPARTMENT_REQ,
-			payload: request.data,
-		};
-	});
-}
 
-export function fetchAllUas() {
-	const request = axios.get(`/api/uas/`).then((data) => {
-		return {
-			type: FETCH_UAS_REQ,
-			payload: request.data,
-		};
-	});
+/*
+function fetchSucess(depts) {
+	return {
+		type: 'FETCH_DEPARTMENT_SUCESS',
+		payload: response.data
+	};
 }
-export function fetchAllCourses() {
-	const request = axios.get(`/api/course/`).then((data) => {
-		return {
-			type: FETCH_COURSE_REQ,
-			payload: request.data,
-		};
-	});
-}
-export function fetchCourseId(courseId) {
-	const request = axios.get(`/api/course/${courseId}`).then((data) => {
-		return {
-			type: FETCH_COURSE_ID,
-			payload: request.data,
-		};
-	});
+*/
+
+export const fetchAllDepartments = () => {
+	return function (dispatch) {
+		axios.get(`/api/department/`).then((response) => {
+
+			dispatch({
+				type: 'FETCH_DEPARTMENT_SUCESS',
+				payload: response.data
+			})
+		})
+	}
 }
 
-export function fetchDepartmentId(departmentId) {
-	const request = axios.get(`/api/department/${departmentId}`).then((data) => {
-		return {
-			type: FETCH_DEPARTMENT_ID,
-			payload: request.data,
-		};
-	});
+export const search = (text) => {
+	console.log(text)
+	return function (dispatch) {
+		axios.get(`/api/department/search/${text}`).then((response) => {
+			dispatch({
+				type: SEARCH_REQ,
+				payload: response.data
+			})
+		})
+	}
+}
+export const search2 = (text2) => {
+	return function (dispatch) {
+		axios.get(`/api/department/search/${text2}`).then((response) => {
+			console.log(response.data)
+			dispatch({
+				type: SEARCH_REQ2,
+				payload: response.data
+			})
+		})
+	}
 }
 
-export function fetchUasId(uasId) {
-	const request = axios.get(`/api/uas/${uasId}`).then((data) => {
-		return {
-			type: FETCH_UAS_ID,
-			payload: request.data,
-		};
-	});
-}
-export function deleteUasId(uasId) {
-	const request = axios.get(`/api/uas/${uasId}`).then((data) => {
-		return {
-			type: DELETE_UAS_REQ,
-			payload: request.data,
-		};
-	});
-}
-export function deleteDepartmentId(departmentId) {
-	const request = axios.get(`/api/department/${departmentId}`).then((data) => {
-		return {
-			type: DELETE_DEPARTMENT_REQ,
-			payload: request.data,
-		};
-	});
-}
-export function deleteCourseId(courseId) {
-	const request = axios.get(`/api/course/${courseId}`).then((data) => {
-		return {
-			type: DELETE_COURSE_REQ,
-			payload: request.data,
-		};
-	});
+
+
+export const deleteDepartmentId = (departmentId) => {
+	return function (dispatch) {
+		axios.delete(`/api/department/delete/${departmentId}`).then((response) => {
+			dispatch({
+				type: DELETE_DEPARTMENT_REQ,
+				payload: response.data,
+			});
+		});
+	}
 }
 
-export function search(searchValue) {
-	const request = axios.get(`/api/course/${searchValue}`).then((data) => {
-		return {
-			type: SEARCH_REQ,
-			payload: request.data,
-		};
-	});
+
+export const fetchCourseId = (id) => {
+	console.log(id)
+	return function (dispatch) {
+		axios.get(`/api/department/${id}`).then((response) => {
+			dispatch({
+				type: FETCH_COURSE_ID,
+				payload: response.data
+			})
+		})
+	}
 }
+
+
+
